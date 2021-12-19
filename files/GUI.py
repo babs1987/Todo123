@@ -17,10 +17,12 @@ class GUI:
         self.b4.place(relx=0.66, rely=0, relwidth=0.33)
         self.entry=tkinter.Entry()
         self.entry.place(relx=0.4,rely=0.1,relwidth=0.2)
-        self.butSort=tkinter.Button(text="сортировка",command=self.sort)
-        self.butSort.place(relx=0.4, rely=0.2, relwidth=0.2)
-        self.butSort = tkinter.Button(text="выполнено/не выполнено", command=self.make_completed)
-        self.butSort.place(relx=0.4, rely=0.3, relwidth=0.2)
+        self.butSort=tkinter.Button(text="сорт возр",command=self.sort)
+        self.butSort.place(relx=0.4, rely=0.2, relwidth=0.1)
+        self.butSort2 = tkinter.Button(text="сорт убыв", command=self.sort2)
+        self.butSort2.place(relx=0.5, rely=0.2, relwidth=0.1)
+        self.butDone = tkinter.Button(text="выполнено/не выполнено", command=self.make_completed)
+        self.butDone.place(relx=0.4, rely=0.3, relwidth=0.2)
         self.lb = tkinter.Listbox(self.root,selectbackground="RED")
         self.lb.place(relx=0.4, rely=0.4, relwidth=0.2)
         self.fill_list_box()
@@ -61,9 +63,11 @@ class GUI:
 
     def sort(self):
         self.diary.tasks.sort(key=attrgetter("task"))
-
         self.fill_list_box()
-
+    def sort2(self):
+        self.diary.tasks.sort(key=attrgetter("task"))
+        self.diary.tasks=self.diary.tasks[::-1]
+        self.fill_list_box()
 
 yiii=GUI(files.Diary("ege.txt"))
 

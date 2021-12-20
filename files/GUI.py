@@ -9,8 +9,6 @@ class GUI:
         self.root.geometry("800x600")
         self.b1 = tkinter.Button(text="Добавить задание", command=self.add_task)
         self.b1.place(relx=0, rely=0,relwidth=0.33)
-        # self.b2 = tkinter.Button(text="Получить задание", command="")
-        # self.b2.place(relx=0.25, rely=0,relwidth=0.25)
         self.b3 = tkinter.Button(text="Удалить задание по инд", command=self.del_by_index)
         self.b3.place(relx=0.33, rely=0, relwidth=0.33)
         self.b4 = tkinter.Button(text="Удалить выбранное задание", command=self.del_active)
@@ -65,8 +63,7 @@ class GUI:
         self.diary.tasks.sort(key=attrgetter("task"))
         self.fill_list_box()
     def sort2(self):
-        self.diary.tasks.sort(key=attrgetter("task"))
-        self.diary.tasks=self.diary.tasks[::-1]
+        self.diary.tasks.sort(key=attrgetter("task"),reverse=True)
         self.fill_list_box()
 
 yiii=GUI(files.Diary("ege.txt"))

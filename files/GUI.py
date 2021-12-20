@@ -6,6 +6,8 @@ class GUI:
     def __init__(self,diary):
         self.diary=diary
         self.root = tkinter.Tk()
+        self.chkValues=[]
+        self.chs=[]
         self.root.geometry("800x600")
         self.b1 = tkinter.Button(text="Добавить задание", command=self.add_task)
         self.b1.place(relx=0, rely=0,relwidth=0.33)
@@ -22,8 +24,36 @@ class GUI:
         self.butDone = tkinter.Button(text="выполнено/не выполнено", command=self.make_completed)
         self.butDone.place(relx=0.4, rely=0.3, relwidth=0.2)
         self.lb = tkinter.Listbox(self.root,selectbackground="RED")
-        self.lb.place(relx=0.4, rely=0.4, relwidth=0.2)
+        self.lb.place(relx=0.3, rely=0.4, relwidth=0.2)
+        self.pl = tkinter.Frame(self.root)
+        self.pl.place(relx=0.5, rely=0.4, relwidth=0.2)
         self.fill_list_box()
+        self.ch=tkinter.Checkbutton()
+
+
+    def add_n_checkboxes(self):
+        for i in range(len(self.diary.tasks)):
+            chkValue=tkinter.BooleanVar()
+            self.chkValues.append(chkValue)
+            self.chkValues[i].set(self.diary.tasks[i].completed)
+            self.ch = tkinter.Checkbutton(self.pl, text=self.diary.tasks[i].task,var=self.chkValues[i],command=self.checked_unchecked)
+            self.ch.pack()
+            self.chs.append(self.ch)
+
+    def destroy_elem(self):
+        for i in self.chs:
+            i.destroy()
+
+
+    def checked_unchecked(self):
+        for i in range(len(self.diary.tasks)):
+            self.diary.tasks[i].completed=self.chkValues[i].get()
+        self.diary.update_file()
+        self.fill_list_box()
+
+
+
+
 
     def add_task(self):
         te=self.entry.get()
@@ -32,9 +62,11 @@ class GUI:
         self.entry.delete(0, tkinter.END)
 
     def fill_list_box(self):
+        self.destroy_elem()
+        self.add_n_checkboxes()
         self.lb.delete(0, tkinter.END)
         for task in self.diary.tasks:
-            if task.completed == "False":
+            if task.completed is False:
                 self.lb.insert(tkinter.END, task.task+" X")
             else:
                 self.lb.insert(tkinter.END, task.task + " V")
@@ -56,7 +88,7 @@ class GUI:
         task = self.lb.get("active")
         self.diary.make_completed_task(task)
         self.fill_list_box()
-
+        self.diary.update_file()
 
 
     def sort(self):

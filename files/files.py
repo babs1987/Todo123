@@ -1,6 +1,6 @@
 import pickle, os
 class Task:
-    def __init__(self, task, completed="False"):
+    def __init__(self, task, completed=False):
         self.task = task
         self.completed = completed
 
@@ -44,11 +44,11 @@ class Diary:
 
     def make_completed_task(self, task):
         for i in range(len(self.tasks)):
-            if self.tasks[i].task == task[0:-2] and self.tasks[i].completed=="False":
-                self.tasks[i].completed = "True"
+            if self.tasks[i].task == task[0:-2] and self.tasks[i].completed is False:
+                self.tasks[i].completed = True
                 return
-            elif self.tasks[i].task == task[0:-2] and self.tasks[i].completed=="True":
-                self.tasks[i].completed = "False"
+            elif self.tasks[i].task == task[0:-2] and self.tasks[i].completed is True:
+                self.tasks[i].completed = False
         self.update_file()
 
 # s = Diary("ege.txt")
@@ -64,6 +64,6 @@ class Diary:
 #
 # for i in s.tasks:
 #     print(i.completed)
-#
-# for i in s.tasks:
-#     print(i)
+
+
+
